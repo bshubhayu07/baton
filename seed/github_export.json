@@ -1,0 +1,36 @@
+{
+  "repository": "nexus-corp/payments-v2-core",
+  "branch": "main",
+  "commits": [
+    {
+      "sha": "9a7f8b1",
+      "author": "alex.mercer@nexuscorp.internal",
+      "date": "2026-10-14T11:20:00Z",
+      "message": "feat(idempotency): implement distributed idempotency store with DynamoDB fallback\n\nWe decided to store idempotency keys in Redis with DynamoDB as durable fallback rather than PostgreSQL to avoid connection pool exhaustion during peak flash sales."
+    },
+    {
+      "sha": "3c4d5e2",
+      "author": "alex.mercer@nexuscorp.internal",
+      "date": "2026-10-22T14:45:00Z",
+      "message": "chore(ownership): update CODEOWNERS file for worker pods\n\nAlex Mercer is code owner for /services/webhook-ingest and the dead-letter-queue retry worker in k8s/payments-worker.yaml."
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 142,
+      "title": "Release sprint v2.0-rc1: Switchover routing",
+      "author": "alex.mercer@nexuscorp.internal",
+      "status": "MERGED",
+      "body": "Target cutover date for production traffic switchover is scheduled for December 15, 2026 as per release sprint milestone. Includes blue-green DNS cutover script and canary traffic shaping."
+    }
+  ],
+  "issues": [
+    {
+      "id": 89,
+      "title": "Investigate socket pool starvation in webhook worker under load",
+      "status": "OPEN",
+      "labels": ["performance", "risk"],
+      "body": "Webhook worker encounters socket resource contention when webhook volume spikes over 12k req/min."
+    }
+  ]
+}

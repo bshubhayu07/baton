@@ -1,0 +1,41 @@
+# Node
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+env/
+venv/
+ENV/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment and secrets
+.env
+.env.local
+.env.production
+
+# Database & Storage
+*.sqlite3
+*.db
+data/
+uploads/
+
+# OS and Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large binaries and temporary user files
+*.pdf

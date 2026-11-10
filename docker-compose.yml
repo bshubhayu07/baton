@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: baton_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: baton
+      POSTGRES_PASSWORD: baton_secret
+      POSTGRES_DB: baton_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U baton -d baton_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: baton_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://baton:baton_secret@postgres:5432/baton_db
+      JWT_SECRET: baton-super-secret-jwt-key-change-in-production-32chars
+      LLM_PROVIDER: ${LLM_PROVIDER:-MOCK}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-gpt-4o-mini}
+      EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-MOCK}
+      AUTO_SEED_DEMO: "true"
+      CORS_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: baton_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

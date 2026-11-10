@@ -1,0 +1,7 @@
+ticket_id,title,assignee,status,priority,dependency_id,notes
+PAY-101,Idempotency Store in DynamoDB,Alex Mercer,DONE,HIGH,,Redis + DynamoDB dual tier completed
+PAY-102,Stripe Payment Elements Integration,Alex Mercer,DONE,HIGH,,PCI SAQ-A verification complete
+PAY-103,Webhook Consumer Dead Letter Queue,Alex Mercer,IN_PROGRESS,CRITICAL,PAY-101,Fix socket leak under load test
+PAY-104,Core Banking Settlement gRPC Client,Dave Chen,BLOCKED,HIGH,,Awaiting Core Banking V3 staging deploy
+PAY-105,Disaster Recovery Failover Runbook,UNASSIGNED,TODO,CRITICAL,,Needs owner assigned before handoff
+PAY-106,Production Cutover Blue-Green Script,Dave Chen,IN_PROGRESS,MEDIUM,PAY-104,Target date alignment required
